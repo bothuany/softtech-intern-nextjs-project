@@ -23,6 +23,7 @@ const ButtonReject = ({ ...props }) => {
           opacity: "0.8",
         },
         textTransform: "none",
+        height: '100%'
       }}
       {...props}
     >

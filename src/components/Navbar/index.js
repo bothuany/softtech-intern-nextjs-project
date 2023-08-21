@@ -18,19 +18,17 @@ import {
 } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Button } from "@mui/material";
-import Link from "next/link";
-import dir from "@/config/dir.json"
-import { Router, useRouter } from "next/router";
+import dir from "@/config/dir.json";
+import { useRouter } from "next/router";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState([]);
   const anchorRef = React.useRef(null);
-  const router = useRouter()
+  const router = useRouter();
   useEffect(() => {
     const fetchCategories = async () => {
       const response = await fetch(dir.api + "products/categories/");
       const categoryData = await response.json();
-      console.log(categoryData);
       setData(categoryData);
     };
     fetchCategories();
@@ -38,7 +36,6 @@ export default function Navbar() {
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
-
 
   const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
@@ -75,7 +72,7 @@ export default function Navbar() {
             </Typography>
 
             <Box>
-              <Button variant="outlined" color="inherit">
+              <Button variant="outlined" color="inherit" onClick={()=>router.push("/products")}>
                 Products
               </Button>
             </Box>
@@ -97,7 +94,7 @@ export default function Navbar() {
                   role={undefined}
                   transition
                   disablePortal
-                  sx={{zIndex:2000}}
+                  sx={{ zIndex: 2000 }}
                 >
                   {({ TransitionProps, placement }) => (
                     <Grow
@@ -112,16 +109,15 @@ export default function Navbar() {
                       <Paper>
                         <ClickAwayListener onClickAway={handleClose}>
                           <MenuList autoFocusItem={open} id="menu-list-grow">
-                        
                             {data?.map((category) => (
-                            
-                                <MenuItem onClick={(event)=>{
-                                  handleClose(event)
-                                  router.push(`/${category}`)
-                                }}>
-                                  {category}
-                                </MenuItem>
-                            
+                              <MenuItem
+                                onClick={(event) => {
+                                  handleClose(event);
+                                  router.push(`/products/category/${category}`);
+                                }}
+                              >
+                                {category}
+                              </MenuItem>
                             ))}
                           </MenuList>
                         </ClickAwayListener>
@@ -133,12 +129,13 @@ export default function Navbar() {
             </Box>
           </Stack>
           <Grid container justifyContent="center"></Grid>
-          <Tooltip title="Add" placement="right">
+          <Tooltip title="Go Cart" placement="right">
             <IconButton
               size="small"
               aria-label="display more actions"
               edge="end"
               color="inherit"
+              onClick={() => router.push("/cart")}
             >
               <ShoppingCartIcon />
             </IconButton>
@@ -148,4 +145,3 @@ export default function Navbar() {
     </Box>
   );
 }
-

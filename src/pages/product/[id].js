@@ -2,7 +2,6 @@ import React, { useMemo } from "react";
 import {
   Box,
   Stack,
-  Button,
   Card,
   CardMedia,
   Chip,
@@ -14,14 +13,14 @@ import {
 
 import { Star } from "@mui/icons-material";
 import ButtonSuccess from "@/components/CustomUI/CustomButton/buttonSuccess";
-import CustomCard from "@/components/CustomUI/CustomCard/CustomCard";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import dir from "@/config/dir.json";
-import Navbar from "@/components/Navbar";
+import { useRouter } from "next/router";
+import { useCart } from "@/contexts/cartContext";
 
 
 export default function ProductPage({ data }) {
-  const router = useRouter();
+
   const categoryTitle = useMemo(() => {
     return data.category.charAt(0).toUpperCase() + data.category.slice(1);
   }, [data.category]);
