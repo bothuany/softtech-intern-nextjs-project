@@ -8,14 +8,16 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import CustomCard from "../CustomUI/CustomCard/CustomCard";
 import ButtonSuccess from "../CustomUI/CustomButton/buttonSuccess";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Star } from "@mui/icons-material";
+import { useCart } from "@/contexts/cartContext";
 
 export default function Product({ product }) {
   const router = useRouter();
+  const { addToCart } = useCart();
 
   const productLink = useMemo(() => {
     return `/product/${product.id}`;
@@ -76,12 +78,20 @@ export default function Product({ product }) {
               </Typography>
             </Box>
           </Stack>
-          <Stack direction={"row"}  mb="1rem" >
+          <Stack direction={"row"} mb="1rem">
             <ButtonSuccess
               text="Add to Cart"
               variant="contained"
               size="small"
               startIcon={<ShoppingCartIcon color="action" />}
+              onClick={() => addToCart(product)}
+            />
+            <ButtonSuccess
+              text="go Cart"
+              variant="contained"
+              size="small"
+              startIcon={<ShoppingCartIcon color="action" />}
+              onClick={() => router.push("/cart")}
             />
           </Stack>
         </Container>

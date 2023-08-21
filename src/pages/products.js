@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import dir from "@/config/dir.json";
 import { Container, Grid, TextField } from "@mui/material";
-import Product from "@/components/Product";
 import CustomSearchBar from "@/components/CustomUI/CustomSearchBar";
 import Loading from "@/components/Loading";
+import Products from "@/components/Products";
+import Navbar from "@/components/Navbar";
 
 export default function ProductsPage({ data }) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -98,10 +99,8 @@ export default function ProductsPage({ data }) {
           {isLoading && <Loading />}
 
           <Grid container spacing={3}>
-            {searchMode &&
-              searchedProducts?.map((product) => <Product product={product} />)}
-            {!searchMode &&
-              products?.map((product) => <Product product={product} />)}
+            {searchMode && <Products products={searchedProducts} />}
+            {!searchMode && <Products products={products} />}
           </Grid>
         </Container>
       </Grid>
