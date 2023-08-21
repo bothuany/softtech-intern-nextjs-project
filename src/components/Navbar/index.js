@@ -39,6 +39,7 @@ export default function Navbar() {
     setOpen((prevOpen) => !prevOpen);
   };
 
+
   const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
@@ -148,14 +149,3 @@ export default function Navbar() {
   );
 }
 
-export async function getServerSideProps() {
-  const response = await fetch(dir.api + "products/categories/");
-  const data = await response.json();
-  console.log("data");
-  console.log(data);
-  return {
-    props: {
-      data,
-    },
-  };
-}

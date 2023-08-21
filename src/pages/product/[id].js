@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
-import { useRouter } from "next/router";
 import {
   Box,
+  Stack,
   Button,
   Card,
   CardMedia,
@@ -11,14 +11,23 @@ import {
   Divider,
   Typography,
 } from "@mui/material";
-import  Star  from "@mui/icons-material";
+
+import { Star } from "@mui/icons-material";
+import ButtonSuccess from "@/components/CustomUI/CustomButton/buttonSuccess";
+import CustomCard from "@/components/CustomUI/CustomCard/CustomCard";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import dir from "@/config/dir.json";
+import Navbar from "@/components/Navbar";
+
 
 export default function ProductPage({ data }) {
   const router = useRouter();
   const categoryTitle = useMemo(() => {
     return data.category.charAt(0).toUpperCase() + data.category.slice(1);
   }, [data.category]);
-
+  const {
+    addToCart,
+  } = useCart();
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -91,6 +100,18 @@ export default function ProductPage({ data }) {
                 color="success"
                 sx={{ marginBottom: "1rem" }}
               />
+
+
+              <Stack direction={"row"} justifyContent={"flex-end"}>
+                <ButtonSuccess
+                  text="Add to Cart"
+                  variant="contained"
+                  size="large"
+                  startIcon={<ShoppingCartIcon color="action" />}
+                  onClick={() => addToCart(data)}
+                />
+              </Stack>
+
             </Grid>
           </Grid>
           <Divider sx={{ marginY: "2rem" }} />
@@ -119,7 +140,9 @@ export default function ProductPage({ data }) {
 
 export async function getServerSideProps(context) {
   const id = context.params.id;
-  const response = await fetch("https://dummyjson.com/products/" + id);
+
+  const response = await fetch(dir.api + "products/" + id);
+
   const data = await response.json();
 
   return {
