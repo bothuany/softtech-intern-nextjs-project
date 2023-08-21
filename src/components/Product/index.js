@@ -14,10 +14,12 @@ import ButtonSuccess from "../CustomUI/CustomButton/buttonSuccess";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Star } from "@mui/icons-material";
 import { useCart } from "@/contexts/cartContext";
+import ButtonReject from "../CustomUI/CustomButton/buttonReject";
+import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
 
 export default function Product({ product }) {
   const router = useRouter();
-  const { addToCart } = useCart();
+  const { addToCart, isCartIncludesProduct, removeFromCart } = useCart();
 
   const productLink = useMemo(() => {
     return `/product/${product.id}`;
@@ -78,7 +80,7 @@ export default function Product({ product }) {
               </Typography>
             </Box>
           </Stack>
-          <Stack direction={"row"} mb="1rem">
+          <Stack direction={"row"} mb="1rem" justifyContent={"space-between"}>
             <ButtonSuccess
               text="Add to Cart"
               variant="contained"
@@ -86,13 +88,17 @@ export default function Product({ product }) {
               startIcon={<ShoppingCartIcon color="action" />}
               onClick={() => addToCart(product)}
             />
-            <ButtonSuccess
-              text="go Cart"
-              variant="contained"
-              size="small"
-              startIcon={<ShoppingCartIcon color="action" />}
-              onClick={() => router.push("/cart")}
-            />
+            {isCartIncludesProduct(product.id) ? (
+              <ButtonReject
+                text="Remove from Cart"
+                variant="contained"
+                size="small"
+                startIcon={<DeleteSweepIcon color="action" />}
+                onClick={() => removeFromCart(product.id)}
+              />
+            ) : (
+              ""
+            )}
           </Stack>
         </Container>
       </CustomCard>

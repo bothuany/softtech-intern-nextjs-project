@@ -7,16 +7,16 @@ const CartProvider = ({ children }) => {
 
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    console.log("cartItems", cartItems);
-    }, [cartItems]);
+  }, [cartItems]);
 
-   useEffect(() => {
+  useEffect(() => {
     const data = localStorage.getItem("cartItems");
+    console.log("data", data);
     if (data) {
-        setCartItems(JSON.parse(data));
+      setCartItems(JSON.parse(data));
     }
-    }, []); 
-    
+  }, []);
+
   const addToCart = (newItem) => {
     let info = isProductWithFeaturesAlreadyAdded(newItem);
 
@@ -34,9 +34,7 @@ const CartProvider = ({ children }) => {
   const isProductWithFeaturesAlreadyAdded = (newItem) => {
     let result = false;
     cartItems.map((item) => {
-      if (
-        item.id === newItem.id 
-      ) {
+      if (item.id === newItem.id) {
         result = item.id;
         return item.id;
       }
@@ -65,6 +63,17 @@ const CartProvider = ({ children }) => {
     setCartItems(updatedCart);
   };
 
+  const isCartIncludesProduct = (id) => {
+    let result = false;
+    cartItems.map((item) => {
+        if (item.id === id) {
+            result = true;
+            return item.id;
+        }
+    });
+    return result;
+    };
+
   const values = {
     cartItems,
     setCartItems,
@@ -72,6 +81,7 @@ const CartProvider = ({ children }) => {
     removeFromCart,
     clearCart,
     setItemQuantity,
+    isCartIncludesProduct
   };
 
   return <CartContext.Provider value={values}>{children}</CartContext.Provider>;
