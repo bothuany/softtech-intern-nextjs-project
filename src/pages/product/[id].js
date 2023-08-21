@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { useRouter } from "next/router";
 import {
   Box,
-  Button,
+  Stack,
   Card,
   CardMedia,
   Chip,
@@ -12,9 +12,13 @@ import {
   Typography,
 } from "@mui/material";
 import { Star } from "@mui/icons-material";
+import ButtonSuccess from "@/components/CustomUI/CustomButton/buttonSuccess";
+import CustomCard from "@/components/CustomUI/CustomCard/CustomCard";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import dir from "@/config/dir.json"
+import Navbar from "@/components/Navbar";
 
 export default function ProductPage({ data }) {
-  const router = useRouter();
   const categoryTitle = useMemo(() => {
     return data.category.charAt(0).toUpperCase() + data.category.slice(1);
   }, [data.category]);
@@ -22,17 +26,20 @@ export default function ProductPage({ data }) {
   return (
     <Grid container>
       <Grid item xs={12}>
+        <Navbar />
+      </Grid>
+      <Grid item xs={12}>
         <Container maxWidth="lg" sx={{ marginTop: "2rem" }}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
-              <Card>
+              <CustomCard>
                 <CardMedia
                   component="img"
                   height="400"
                   image={data.thumbnail}
                   alt={data.title}
                 />
-              </Card>
+              </CustomCard>
             </Grid>
             <Grid item xs={12} md={6}>
               <Typography variant="h5" color={"gray"} gutterBottom>
@@ -86,11 +93,21 @@ export default function ProductPage({ data }) {
                   ({data.stock} reviews)
                 </Typography>
               </Box>
+
               <Chip
-                label={`In Stock: ${data.stock}`}
-                color="success"
                 sx={{ marginBottom: "1rem" }}
+                label={`In Stock: ${data.stock}`}
+                color="warning"
               />
+
+              <Stack direction={"row"} justifyContent={"flex-end"}>
+                <ButtonSuccess
+                  text="Add to Cart"
+                  variant="contained"
+                  size="large"
+                  startIcon={<ShoppingCartIcon color="action" />}
+                />
+              </Stack>
             </Grid>
           </Grid>
           <Divider sx={{ marginY: "2rem" }} />
@@ -100,14 +117,14 @@ export default function ProductPage({ data }) {
           <Grid container spacing={2}>
             {data.images.map((image, index) => (
               <Grid item xs={12} sm={4} key={index}>
-                <Card>
+                <CustomCard>
                   <CardMedia
                     component="img"
                     height="150"
                     image={image}
                     alt={`${data.title} Image ${index + 1}`}
                   />
-                </Card>
+                </CustomCard>
               </Grid>
             ))}
           </Grid>
@@ -119,7 +136,7 @@ export default function ProductPage({ data }) {
 
 export async function getServerSideProps(context) {
   const id = context.params.id;
-  const response = await fetch("https://dummyjson.com/products/" + id);
+  const response = await fetch(dir.api+"products/" + id);
   const data = await response.json();
 
   return {
