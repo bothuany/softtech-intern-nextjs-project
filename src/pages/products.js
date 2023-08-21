@@ -3,7 +3,9 @@ import dir from "@/config/dir.json";
 import { Container, Grid, TextField } from "@mui/material";
 import CustomSearchBar from "@/components/CustomUI/CustomSearchBar";
 import Loading from "@/components/Loading";
+
 import Products from "@/components/Products";
+
 import Navbar from "@/components/Navbar";
 
 export default function ProductsPage({ data }) {
@@ -76,7 +78,7 @@ export default function ProductsPage({ data }) {
   return (
     <Grid container>
       <Grid item xs={12}>
-        <Navbar />
+        <Navbar/>
       </Grid>
       <Grid item xs={12}>
         <Container maxWidth="lg" sx={{ marginTop: "2rem" }}>
