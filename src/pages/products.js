@@ -61,9 +61,10 @@ export default function ProductsPage({ data }) {
         document.documentElement.offsetHeight ||
       isLoading
     ) {
-      return;
+      return true;
     }
     fetchData();
+    return true;
   };
 
   useEffect(() => {
