@@ -49,7 +49,7 @@ export default function Navbar() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
           <Stack spacing={2} direction="row">
@@ -66,6 +66,7 @@ export default function Navbar() {
                 letterSpacing: ".3rem",
                 color: "inherit",
                 textDecoration: "none",
+                display: { xs: "none", sm: "block"}
               }}
             >
               Softtech Market
