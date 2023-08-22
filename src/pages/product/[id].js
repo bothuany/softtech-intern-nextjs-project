@@ -17,6 +17,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import dir from "@/config/dir.json";
 import { useRouter } from "next/router";
 import { useCart } from "@/contexts/cartContext";
+import Navbar from "@/components/Navbar";
 
 
 export default function ProductPage({ data }) {
@@ -29,6 +30,9 @@ export default function ProductPage({ data }) {
   } = useCart();
   return (
     <Grid container>
+      <Grid item xs={12}>
+        <Navbar />
+      </Grid>
       <Grid item xs={12}>
         <Container maxWidth="lg" sx={{ marginTop: "2rem" }}>
           <Grid container spacing={3}>

@@ -52,34 +52,37 @@ export default function Navbar() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Grid container alignItems="center" justifyContent="space-between">
-            <Grid item xs={6} sm={4}>
-              <Stack direction="row" alignItems="center" spacing={2}>
-                <AdbIcon sx={{ display: { xs: "flex" }, mr: 1 }} />
-                {/* Show logo only on smaller screens */}
-                <Typography
-                  variant="h5"
-                  noWrap
-                  component="a"
-                  href="/"
-                  sx={{
-                    display: { xs: "none", sm: "block" },
-                    fontFamily: "monospace",
-                    fontWeight: 700,
-                    letterSpacing: ".3rem",
-                    color: "inherit",
-                    textDecoration: "none",
-                  }}
-                >
-                  Softtech Market
-                </Typography>
-              </Stack>
-            </Grid>
-            <Grid item xs={6} sm={8}>
-              <Grid container justifyContent="flex-end" alignItems="center">
+          <Stack spacing={2} direction="row">
+            <AdbIcon sx={{ display: { xs: "flex" }, mr: 1 }} />
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              href="/"
+              sx={{
+                mr: 2,
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+                display: { xs: "none", sm: "block"}
+              }}
+            >
+              Softtech Market
+            </Typography>
+
+            <Box>
+              <Button variant="outlined" color="inherit" onClick={()=>router.push("/products")}>
+                Products
+              </Button>
+            </Box>
+            <Box>
+              <div onMouseLeave={handleMouseLeave}>
+
                 <Button
                   variant="outlined"
                   color="inherit"
