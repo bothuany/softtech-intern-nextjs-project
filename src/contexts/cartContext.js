@@ -6,7 +6,10 @@ const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    if(cartItems.length > 0){
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    }
+    
   }, [cartItems]);
 
   useEffect(() => {
@@ -23,7 +26,7 @@ const CartProvider = ({ children }) => {
     if (!info) {
       setCartItems([...cartItems, newItem]);
     } else {
-      cartItems.map((item) => {
+      cartItems?.map((item) => {
         if (item.id == info) {
           item.quantity += 1;
         }
@@ -33,7 +36,7 @@ const CartProvider = ({ children }) => {
 
   const isProductWithFeaturesAlreadyAdded = (newItem) => {
     let result = false;
-    cartItems.map((item) => {
+    cartItems?.map((item) => {
       if (item.id === newItem.id) {
         result = item.id;
         return item.id;
@@ -44,7 +47,7 @@ const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = (id) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
+    setCartItems(cartItems?.filter((item) => item.id !== id));
   };
 
   const clearCart = () => {
@@ -52,7 +55,7 @@ const CartProvider = ({ children }) => {
   };
 
   const setItemQuantity = (id, newQuantity) => {
-    const updatedCart = cartItems.map((item) => {
+    const updatedCart = cartItems?.map((item) => {
       if (item.id === id) {
         return { ...item, quantity: newQuantity };
       } else {
@@ -65,7 +68,7 @@ const CartProvider = ({ children }) => {
 
   const isCartIncludesProduct = (id) => {
     let result = false;
-    cartItems.map((item) => {
+    cartItems?.map((item) => {
         if (item.id === id) {
             result = true;
             return item.id;
