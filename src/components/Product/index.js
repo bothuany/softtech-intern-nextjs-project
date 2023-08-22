@@ -10,12 +10,11 @@ import {
 } from "@mui/material";
 import React, { useMemo } from "react";
 import CustomCard from "../CustomUI/CustomCard/CustomCard";
-import ButtonSuccess from "../CustomUI/CustomButton/buttonSuccess";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Star } from "@mui/icons-material";
 import { useCart } from "@/contexts/cartContext";
-import ButtonReject from "../CustomUI/CustomButton/buttonReject";
 import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
+import CustomButton from "../CustomUI/CustomButton";
 
 export default function Product({ product }) {
   const router = useRouter();
@@ -81,7 +80,8 @@ export default function Product({ product }) {
             </Box>
           </Stack>
           <Stack direction={"row"} mb="1rem" justifyContent={"space-between"}>
-            <ButtonSuccess
+            <CustomButton
+            type="success"
               text="Add to Cart"
               variant="contained"
               size="small"
@@ -89,7 +89,8 @@ export default function Product({ product }) {
               onClick={() => addToCart(product)}
             />
             {isCartIncludesProduct(product.id) ? (
-              <ButtonReject
+              <CustomButton
+              type="reject"
                 text="Remove from Cart"
                 variant="contained"
                 size="small"

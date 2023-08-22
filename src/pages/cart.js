@@ -1,12 +1,10 @@
 import {
   Box,
-  CardMedia,
   Container,
   Divider,
   Grid,
   List,
   ListItem,
-  ListItemAvatar,
   ListItemText,
   Paper,
   Stack,
@@ -15,10 +13,9 @@ import {
 import React from "react";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
-import ButtonInfo from "@/components/CustomUI/CustomButton/buttonInfo";
-import ButtonReject from "@/components/CustomUI/CustomButton/buttonReject";
 import { useCart } from "@/contexts/cartContext";
 import Navbar from "@/components/Navbar";
+import CustomButton from "@/components/CustomUI/CustomButton";
 
 export default function CartPage() {
   const { cartItems, removeFromCart, clearCart } = useCart();
@@ -61,7 +58,8 @@ export default function CartPage() {
                         </ListItem>
                       </Grid>
                     </Grid>
-                    <ButtonReject
+                    <CustomButton
+                      type="reject"
                       variant="contained"
                       size="small"
                       startIcon={<DeleteSweepIcon color="action" />}
@@ -84,27 +82,32 @@ export default function CartPage() {
                 ${calculateTotal() ? calculateTotal().toFixed(2) : 0}
               </Typography>
             </Stack>
-            <ButtonInfo
-              variant="contained"
-              size="large"
-              startIcon={<ShoppingCartIcon />}
-              sx={{ marginTop: "1rem", width: "100%" }}
-              text="Proceed to Checkout"
-              onClick={() => clearCart()}
-            />
+            <Box ml={"1rem"} maxWidth="100%">
+              <CustomButton
+                fullWidth
+                type="info"
+                variant="contained"
+                size="large"
+                startIcon={<ShoppingCartIcon />}
+                text="Proceed to Checkout"
+                onClick={() => clearCart()}
+              />
+            </Box>
+
             <Typography variant="subtitle1" textAlign="center" mt="1rem">
               or
             </Typography>
-            <ButtonReject
-              color="error"
-              variant="contained"
-              size="large"
-              styleName="buttonColor"
-              startIcon={<DeleteSweepIcon />}
-              sx={{ marginTop: "1rem", width: "100%" }}
-              text="Clear All"
-              onClick={() => clearCart()}
-            />
+            <Box ml={"1rem"}>
+              <CustomButton
+                fullWidth
+                type="reject"
+                variant="contained"
+                size="large"
+                startIcon={<DeleteSweepIcon />}
+                text="Clear All"
+                onClick={() => clearCart()}
+              />
+            </Box>
           </Paper>
         </Container>
       </Grid>
