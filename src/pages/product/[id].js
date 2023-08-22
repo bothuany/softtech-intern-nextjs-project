@@ -12,13 +12,12 @@ import {
 } from "@mui/material";
 
 import { Star } from "@mui/icons-material";
-import ButtonSuccess from "@/components/CustomUI/CustomButton/buttonSuccess";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import dir from "@/config/dir.json";
 import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
 import { useCart } from "@/contexts/cartContext";
 import Navbar from "@/components/Navbar";
-import ButtonReject from "@/components/CustomUI/CustomButton/buttonReject";
+import CustomButton from "@/components/CustomUI/CustomButton";
 
 export default function ProductPage({ data }) {
   const categoryTitle = useMemo(() => {
@@ -102,7 +101,8 @@ export default function ProductPage({ data }) {
               />
 
               <Stack direction={"row"} justifyContent={"flex-end"}>
-                <ButtonSuccess
+                <CustomButton
+                  type="success"
                   text="Add to Cart"
                   variant="contained"
                   size="large"
@@ -110,15 +110,17 @@ export default function ProductPage({ data }) {
                   onClick={() => addToCart(data)}
                 />
                 {isCartIncludesProduct(data.id) ? (
-                  <ButtonReject
+                  <Box ml={"1rem"}>
+                    <CustomButton
+                    type="reject"
                     text="Remove from Cart"
                     variant="contained"
                     color="error"
                     size="large"
-                    sx={{ marginLeft: "1rem" }}
                     startIcon={<DeleteSweepIcon color="action" />}
                     onClick={() => removeFromCart(data.id)}
                   />
+                  </Box>
                 ) : (
                   ""
                 )}

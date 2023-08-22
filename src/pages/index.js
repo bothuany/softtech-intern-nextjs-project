@@ -7,8 +7,10 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const router = useRouter();
+
   useEffect(() => {
     router.push("/products");
   }, []);
+  
   return <></>;
 }
