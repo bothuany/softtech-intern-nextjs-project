@@ -117,8 +117,9 @@ export default function Navbar() {
                       <Paper>
                         <ClickAwayListener onClickAway={handleClose}>
                           <MenuList autoFocusItem={open} id="menu-list-grow">
-                            {data?.map((category) => (
+                            {data?.map((category, index) => (
                               <MenuItem
+                                key={index}
                                 onClick={(event) => {
                                   handleClose(event);
                                   router.push(`/products/category/${category}`);
