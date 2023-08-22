@@ -15,19 +15,16 @@ import { Star } from "@mui/icons-material";
 import ButtonSuccess from "@/components/CustomUI/CustomButton/buttonSuccess";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import dir from "@/config/dir.json";
-import { useRouter } from "next/router";
+import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
 import { useCart } from "@/contexts/cartContext";
 import Navbar from "@/components/Navbar";
-
+import ButtonReject from "@/components/CustomUI/CustomButton/buttonReject";
 
 export default function ProductPage({ data }) {
-
   const categoryTitle = useMemo(() => {
     return data.category.charAt(0).toUpperCase() + data.category.slice(1);
   }, [data.category]);
-  const {
-    addToCart,
-  } = useCart();
+  const { addToCart, isCartIncludesProduct, removeFromCart } = useCart();
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -104,7 +101,6 @@ export default function ProductPage({ data }) {
                 sx={{ marginBottom: "1rem" }}
               />
 
-
               <Stack direction={"row"} justifyContent={"flex-end"}>
                 <ButtonSuccess
                   text="Add to Cart"
@@ -113,8 +109,20 @@ export default function ProductPage({ data }) {
                   startIcon={<ShoppingCartIcon color="action" />}
                   onClick={() => addToCart(data)}
                 />
+                {isCartIncludesProduct(data.id) ? (
+                  <ButtonReject
+                    text="Remove from Cart"
+                    variant="contained"
+                    color="error"
+                    size="large"
+                    sx={{ marginLeft: "1rem" }}
+                    startIcon={<DeleteSweepIcon color="action" />}
+                    onClick={() => removeFromCart(data.id)}
+                  />
+                ) : (
+                  ""
+                )}
               </Stack>
-
             </Grid>
           </Grid>
           <Divider sx={{ marginY: "2rem" }} />
