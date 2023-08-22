@@ -23,7 +23,7 @@ import Navbar from "@/components/Navbar";
 export default function CartPage() {
   const { cartItems, removeFromCart, clearCart } = useCart();
   const calculateTotal = () => {
-    return cartItems.reduce((total, item) => total + item.price, 0);
+    return cartItems?.reduce((total, item) => total + item.price, 0);
   };
 
   return (
@@ -38,7 +38,7 @@ export default function CartPage() {
           </Typography>
           <Paper elevation={3} sx={{ padding: "1rem" }}>
             <List sx={{ marginBottom: "1rem" }}>
-              {cartItems.map((item) => (
+              {cartItems?.map((item) => (
                 <div key={item.id}>
                   <Stack
                     direction="row"
@@ -81,7 +81,7 @@ export default function CartPage() {
             >
               <Typography variant="h6">Total:</Typography>
               <Typography variant="h6">
-                ${calculateTotal().toFixed(2)}
+                ${calculateTotal() ? calculateTotal().toFixed(2) : 0}
               </Typography>
             </Stack>
             <ButtonInfo
@@ -99,6 +99,7 @@ export default function CartPage() {
               color="error"
               variant="contained"
               size="large"
+              styleName="buttonColor"
               startIcon={<DeleteSweepIcon />}
               sx={{ marginTop: "1rem", width: "100%" }}
               text="Clear All"

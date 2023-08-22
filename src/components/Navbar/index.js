@@ -20,11 +20,13 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Button } from "@mui/material";
 import dir from "@/config/dir.json";
 import { useRouter } from "next/router";
+
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState([]);
   const anchorRef = React.useRef(null);
   const router = useRouter();
+
   useEffect(() => {
     const fetchCategories = async () => {
       const response = await fetch(dir.api + "products/categories/");
@@ -33,6 +35,7 @@ export default function Navbar() {
     };
     fetchCategories();
   }, []);
+
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
@@ -79,68 +82,81 @@ export default function Navbar() {
             </Box>
             <Box>
               <div onMouseLeave={handleMouseLeave}>
+
                 <Button
-                  ref={anchorRef}
-                  aria-controls={open ? "menu-list-grow" : undefined}
-                  aria-haspopup="true"
-                  onClick={handleToggle}
                   variant="outlined"
                   color="inherit"
+                  sx={{ marginBottom: { xs: 1, sm: 0 }, marginRight: 1 }}
+                  onClick={() => router.push("/products")}
                 >
-                  Categories
+                  Products
                 </Button>
-                <Popper
-                  open={open}
-                  anchorEl={anchorRef.current}
-                  role={undefined}
-                  transition
-                  disablePortal
-                  sx={{ zIndex: 2000 }}
-                >
-                  {({ TransitionProps, placement }) => (
-                    <Grow
-                      {...TransitionProps}
-                      style={{
-                        transformOrigin:
-                          placement === "bottom"
-                            ? "center top"
-                            : "center bottom",
-                      }}
-                    >
-                      <Paper>
-                        <ClickAwayListener onClickAway={handleClose}>
-                          <MenuList autoFocusItem={open} id="menu-list-grow">
-                            {data?.map((category) => (
-                              <MenuItem
-                                onClick={(event) => {
-                                  handleClose(event);
-                                  router.push(`/products/category/${category}`);
-                                }}
-                              >
-                                {category}
-                              </MenuItem>
-                            ))}
-                          </MenuList>
-                        </ClickAwayListener>
-                      </Paper>
-                    </Grow>
-                  )}
-                </Popper>
-              </div>
-            </Box>
-          </Stack>
-          <Grid container justifyContent="center"></Grid>
-          <Tooltip title="Go Cart" placement="right">
-            <IconButton
-              size="small"
-              aria-label="display more actions"
-              edge="end"
-              color="inherit"
-              onClick={() => router.push("/cart")}
-            >
-              <ShoppingCartIcon />
-            </IconButton>
-          </Tooltip>
+                <div onMouseLeave={handleMouseLeave}>
+                  <Button
+                    ref={anchorRef}
+                    aria-controls={open ? "menu-list-grow" : undefined}
+                    aria-haspopup="true"
+                    onClick={handleToggle}
+                    variant="outlined"
+                    color="inherit"
+                  >
+                    Categories
+                  </Button>
+                  <Popper
+                    open={open}
+                    anchorEl={anchorRef.current}
+                    role={undefined}
+                    transition
+                    disablePortal
+                    sx={{ zIndex: 2000 }}
+                  >
+                    {({ TransitionProps, placement }) => (
+                      <Grow
+                        {...TransitionProps}
+                        style={{
+                          transformOrigin:
+                            placement === "bottom"
+                              ? "center top"
+                              : "center bottom",
+                        }}
+                      >
+                        <Paper>
+                          <ClickAwayListener onClickAway={handleClose}>
+                            <MenuList autoFocusItem={open} id="menu-list-grow">
+                              {data?.map((category, index) => (
+                                <MenuItem
+                                  key={index}
+                                  onClick={(event) => {
+                                    handleClose(event);
+                                    router.push(
+                                      `/products/category/${category}`
+                                    );
+                                  }}
+                                >
+                                  {category}
+                                </MenuItem>
+                              ))}
+                            </MenuList>
+                          </ClickAwayListener>
+                        </Paper>
+                      </Grow>
+                    )}
+                  </Popper>
+                </div>
+                <Tooltip title="Go Cart" placement="right">
+                  <IconButton
+                    size="small"
+                    aria-label="display more actions"
+                    edge="end"
+                    color="inherit"
+                    onClick={() => router.push("/cart")}
+                  >
+                    <ShoppingCartIcon />
+                  </IconButton>
+                </Tooltip>
+              </Grid>
+            </Grid>
+          </Grid>
         </Toolbar>
       </AppBar>
     </Box>

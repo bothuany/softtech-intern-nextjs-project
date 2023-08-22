@@ -12,6 +12,7 @@ const StyledText = styled(Typography)`
 `;
 
 const ButtonInfo = ({ ...props }) => {
+
   return (
     <Button
       sx={{
